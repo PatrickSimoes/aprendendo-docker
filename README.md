@@ -1,75 +1,89 @@
-<h1>"Comandos Utilizados no Meu Primeiro Curso de Docker"</h1>
+# Comandos Utilizados no Meu Primeiro Curso de Docker #
 
-Docker Hub - Imagens Oficiais/Comunidade
-https://hub.docker.com/
+## Docker Hub - Imagens Oficiais/Comunidade ##
 
-<h2>--Baixando Imagens do Docker Hub:</h2>
+<a href="https://hub.docker.com/#tag-de-marcação" target="_blank">Docker Hub</a>
 
-    docker pull node;
-    docker pull ubuntu;
-    docker pull mysql;
+---
 
-<h2>--Para Rodar o Conteiner Pode ser Usado o Comando Abaixo:</h2>
+## Baixando Imagens do Docker Hub: ##
 
-    docker run -d --rm --name patrick-mysql -e MYSQL_ROOT_PASSWORD=segredo -v volume-mysql:/var/lib/mysql -p "3306:3306" mysql;
+    docker pull node
+    docker pull ubuntu
+    docker pull mysql
 
-<h2>--Para Rodar o Node Pode Ser Usado o Comando Abaixo:</h2>
+## Para Rodar o Conteiner Pode ser Usado o Comando Abaixo: ##
 
-    docker run -it --rm --name patrick-node -v "${PWD}:/user/src/app" -w "/user/src/app" -p "3000:3000" --network=patrick-network node bash -c "npm i && node index";
+    docker run -d --rm --name patrick-mysql -e MYSQL_ROOT_PASSWORD=segredo -v volume-mysql:/var/lib/mysql -p "3306:3306" mysql
 
-<h2>--Para Rodar a Imagem Criada Pelo Dockerfile, Pode Ser Usado o Comando Acabaixo:</h2>
+## Para Rodar o Node Pode Ser Usado o Comando Abaixo: ##
 
-    docker run -it --rm --name patrick-node2 -p "3000:3000" --network=patrick-network patrick-imagem;
+    docker run -it --rm --name patrick-node -v "${PWD}:/user/src/app" -w "/user/src/app" -p "3000:3000" --network=patrick-network node bash -c "npm i && node index"
 
-***COMANDOS AUXILIARES PARA O DOCKER, REMOVER ASPAS ANTES DE RODAR***
-/*
-<h2>--Lista as Imagens Criadas.</h2>
+## Para Rodar a Imagem Criada Pelo Dockerfile, Pode Ser Usado o Comando Acabaixo: ##
 
-    docker images; 
+    docker run -it --rm --name patrick-node2 -p "3000:3000" --network=patrick-network patrick-imagem
 
-<h2>--Aparece Diversas informações sobre o anyware.</h2>
+---
 
-    docker inspect 'anyware'; 
+## Lista as Imagens Criadas. ##
 
-<h2>--Lista Conteiners Rodando.</h2>
+    docker images 
 
-    docker ps;
+## Aparece Diversas informações sobre o Conteiner/Imagem/Volumes. ##
 
-<h2>--Lista Todos os Containers.</h2>
+    docker inspect nomereferencia 
 
-    docker ps -a;
+## Lista Conteiners Rodando. ##
 
-<h2>--Para a Execução de Um Conteiner.</h2>
+    docker ps
 
-    docker stop 'nomeConteiner';
+## Lista Todos os Containers. ##
+
+    docker ps -a
+
+## Para a Execução de Um Conteiner. ##
+
+    docker stop nomeConteiner
 
 
-<h2>--Mata a Execução de Um Conteiner.</h2>
+## Mata a Execução de Um Conteiner. ##
 
-    docker kill 'nomeConteiner';
+    docker kill nomeConteiner
 
-<h2>--Lista Volumes Criados.</h2>
+## Lista Volumes Criados. ##
 
-    docker volume ls;
+    docker volume ls
 
-<h2>--Escolhe qual o network do conteiner.</h2>
+## Escolhe qual o network do conteiner. ##
 
-    docker network connect 'network para conectar' 'conteiner'; 
+    docker network connect nomeNetwork nomeConteiner 
 
-<h2>--Remove network do conteiner.</h2>
+## Remove network do conteiner. ##
 
-    docker network disconnect 'network para desconectar' 'conteiner';
+    docker network disconnect nomeNetwork nomeConteiner
 
-<h2>--Executa um conteiner.</h2>
+## Executa um conteiner. ##
 
-    docker exec -it 'conteiner' bash;
+    docker exec -it nomeConteiner bash
 
-<h2>--Para criar uma imagem.</h2>
+## Para criar uma imagem. ##
 
-    docker build -t 'nomeImagem' 'caminho da pasta ou . atual'
+    docker build -t nomeImagem caminhoArivo
 
-<h2>--Acessar e o banco de dados mysql.</h2>
+## Acessar e o banco de dados mysql. ##
 
-    mysql -uroot -p'senha';
+    mysql -uroot -pSenha
 
-*/
+## Como fazer Backup de Bando de dados c/ Docker no Postgres (Dump) ##
+
+- Criando o arquivo para o Dump 
+```
+    docker exec nomeConteiner pg_dumpall -U postgres > /caminho/da/pasta/nome_arquivo.sql
+```
+
+
+- Fazendo a restauração do Banco de dados
+```
+    cat C:\caminho\da\pasta\nome_arquivo.sql | docker exec -i docker-db-1 psql -U postgres
+```
